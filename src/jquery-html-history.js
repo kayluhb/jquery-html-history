@@ -14,11 +14,11 @@
 //  Others  - Other modern browsers probably support some subset of features.
 
 // This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
-// Modifications made by Caleb Brown 
+// Modifications made by Caleb Brown (twitter.com/kayluhb)
 // Some of the code in this plugin was adapted from Modernizr, which is also available under an MIT License.
 (function($) {
     // can use $(window).bind("htmlhistory", fn) or $(window).htmlhistory(fn)
-    var evt = 'htmlhistory', hevt = 'hashchange', $bod = $('body');
+    var evt = 'htmlhistory', hashevt = 'hashchange', hash = 'onhashchange';
     
     $.fn.htmlhistory = function(handler) {
         return handler ? this.bind(evt, handler) : this.trigger(evt);
@@ -32,37 +32,35 @@
             interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
             disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
         },
-
         // call this once when your app is ready to use htmlhistory
         init: function(options) {
-            var lastHash, $win = $(window);
+            var lastHash, $win = $(window), $bod = $('body');
             $.extend(his.options, options);
             // Listen to the HTML5 "popstate" event, if supported and desired
-            if (his.options.useHistory && his.detectHistorySupport()) {
-                    $win.bind("popstate", function(e) {
+            if (his.options.useHistory && his.supportsHistory()) {
+                $win.bind("popstate", function(e) {
                     $win.trigger(evt);
                 });
             }
-
             // Listen to the HTML5 "hashevent" event, if supported and desired
             if (his.options.useHashchange) {
-                $win.bind(hevt, function(e) {
+                $win.bind(hashevt, function(e) {
                     $win.trigger(evt);
                 });
-            // Hashchange support for older browsers (IE6/7)
-            if (!his.detectHashchangeSupport()) {
-                lastHash = window.location.hash;
-                setInterval(function() {
-                    if (lastHash !== window.location.hash) {
-                        $win.trigger(hevt);
-                        lastHash = window.location.hash;
-                    }
-                }, his.options.pollingInterval);
+                // Hashchange support for older browsers (IE6/7)
+                if (!his.supportsHashchange()) {
+                    lastHash = window.location.hash;
+                    setInterval(function() {
+                        if (lastHash !== window.location.hash) {
+                            $win.trigger(hashevt);
+                            lastHash = window.location.hash;
+                        }
+                    }, his.options.pollingInterval);
+                }
             }
-        }
-        // Intercept all relative links on the page, to avoid unneccesary page refreshes
-        if (his.options.interceptLinks) {
-            $bod.delegate("a[href^=/]", "click", function(e) {
+            // Intercept all relative links on the page, to avoid unneccesary page refreshes
+            if (his.options.interceptLinks) {
+                $bod.delegate("a[href^=/]", "click", function(e) {
                     his.changeTo($(this).attr("href"));
                     e.preventDefault();
                 });
@@ -77,7 +75,7 @@
         // Call to manually navigate the app somewhere
         changeTo: function(path) {
             // If we're using History Management, just push an entry
-            if (his.options.useHistory && his.detectHistorySupport()) {
+            if (his.options.useHistory && his.supportsHistory()) {
                 window.history.pushState(null, null, path);
                 $win.trigger(evt);
             } else {
@@ -90,12 +88,12 @@
             }
         },
         // Simple feature detection for History Management (borrowed from Modernizr)
-        detectHistorySupport: function() {
+        supportsHistory: function() {
             return !!(window.history && history.pushState);
         },
         // Simple feature detection for hashchange (adapted from Modernizr)
-        detectHashchangeSupport: function() {
-            var hash = 'onhashchange', isSupported = hash in window;
+        supportsHashchange: function() {
+            var isSupported = hash in window;
             if (!isSupported && window.setAttribute) {
                 window.setAttribute(hash, "return;");
                 isSupported = typeof window.onhashchange === "function";
