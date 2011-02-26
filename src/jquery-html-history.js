@@ -17,90 +17,90 @@
 // Modifications made by Caleb Brown 
 // Some of the code in this plugin was adapted from Modernizr, which is also available under an MIT License.
 (function($) {
-    // can use $(window).b    ind("htmlhistory", fn) or $(window).htmlhistory(fn)
+    // can use $(window).bind("htmlhistory", fn) or $(window).htmlhistory(fn)
+    var evt = 'htmlhistory', hevt = 'hashchange', $bod = $('body');
+    
     $.fn.htmlhistory = function(handler) {
-        return handler ? this.bind("htmlhistory", handler) : this.trigger("htmlhistory");
+        return handler ? this.bind(evt, handler) : this.trigger(evt);
     };
-
     var his = $.htmlhistory = {
         // default options
         options: {
-        useHistory: true, // whether we use HTML5 History Management to change the current path
-        useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
-        pollingInterval: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
-        interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
-        disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
-    },
+            useHistory: true, // whether we use HTML5 History Management to change the current path
+            useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
+            pollingInterval: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
+            interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
+            disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
+        },
 
-    // call this once when your app is ready to use htmlhistory
-    init: function(options) {
-        var lastHash, $win = $(window);
-        $.extend(his.options, options);
-        // Listen to the HTML5 "popstate" event, if supported and desired
-        if (his.options.useHistory && his.detectHistorySupport()) {
-                $win.bind("popstate", function(e) {
-                $win.trigger("htmlhistory");
-            });
-        }
-
-        // Listen to the HTML5 "hashchange" event, if supported and desired
-        if (his.options.useHashchange) {
-            $win.bind("hashchange", function(e) {
-                $win.trigger("htmlhistory");
-            });
-        // Hashchange support for older browsers (IE6/7)
-        if (!his.detectHashchangeSupport()) {
-            lastHash = window.location.hash;
-            setInterval(function() {
-                if (lastHash !== window.location.hash) {
-                    $win.trigger("hashchange");
-                    lastHash = window.location.hash;
-                }
-            }, his.options.pollingInterval);
-        }
-    }
-    // Intercept all relative links on the page, to avoid unneccesary page refreshes
-    if (his.options.interceptLinks) {
-        $("body").delegate("a[href^=/]", "click", function(e) {
-                his.changeTo($(this).attr("href"));
-                e.preventDefault();
-            });
-        }
-
-        // Ensure all the href=# links on the page don't mess with things
-        if (his.options.disableHashLinks) {
-            $("body").delegate("a[href=#]", "click", function(e) {
-                e.preventDefault();
-            });
-        }
-    },
-    // Call to manually navigate the app somewhere
-    changeTo: function(path) {
-        // If we're using History Management, just push an entry
-        if (his.options.useHistory && his.detectHistorySupport()) {
-            window.history.pushState(null, null, path);
-            $win.trigger("htmlhistory");
-        } else {
-            // Make sure there's a hash (going from foo.com#bar to foo.com would trigger a reload in Firefox, sadly)
-            if (path.indexOf("#") < 0) {
-                path = "#" + path;
+        // call this once when your app is ready to use htmlhistory
+        init: function(options) {
+            var lastHash, $win = $(window);
+            $.extend(his.options, options);
+            // Listen to the HTML5 "popstate" event, if supported and desired
+            if (his.options.useHistory && his.detectHistorySupport()) {
+                    $win.bind("popstate", function(e) {
+                    $win.trigger(evt);
+                });
             }
-            // Otherwise, navigate to the new URL.  Might reload the browser.  Might trigger a hashchange.
-            window.location.href = path;
+
+            // Listen to the HTML5 "hashevent" event, if supported and desired
+            if (his.options.useHashchange) {
+                $win.bind(hevt, function(e) {
+                    $win.trigger(evt);
+                });
+            // Hashchange support for older browsers (IE6/7)
+            if (!his.detectHashchangeSupport()) {
+                lastHash = window.location.hash;
+                setInterval(function() {
+                    if (lastHash !== window.location.hash) {
+                        $win.trigger(hevt);
+                        lastHash = window.location.hash;
+                    }
+                }, his.options.pollingInterval);
+            }
         }
-    },
-    // Simple feature detection for History Management (borrowed from Modernizr)
-    detectHistorySupport: function() {
-        return !!(window.history && history.pushState);
-    },
-    // Simple feature detection for hashchange (adapted from Modernizr)
-    detectHashchangeSupport: function() {
-        var isSupported = "onhashchange" in window;
-        if (!isSupported && window.setAttribute) {
-            window.setAttribute("onhashchange", "return;");
-            isSupported = typeof window.onhashchange === "function";
+        // Intercept all relative links on the page, to avoid unneccesary page refreshes
+        if (his.options.interceptLinks) {
+            $bod.delegate("a[href^=/]", "click", function(e) {
+                    his.changeTo($(this).attr("href"));
+                    e.preventDefault();
+                });
+            }
+            // Ensure all the href=# links on the page don't mess with things
+            if (his.options.disableHashLinks) {
+                $bod.delegate("a[href=#]", "click", function(e) {
+                    e.preventDefault();
+                });
+            }
+        },
+        // Call to manually navigate the app somewhere
+        changeTo: function(path) {
+            // If we're using History Management, just push an entry
+            if (his.options.useHistory && his.detectHistorySupport()) {
+                window.history.pushState(null, null, path);
+                $win.trigger(evt);
+            } else {
+                // Make sure there's a hash (going from foo.com#bar to foo.com would trigger a reload in Firefox, sadly)
+                if (path.indexOf("#") < 0) {
+                    path = "#" + path;
+                }
+                // Otherwise, navigate to the new URL.  Might reload the browser.  Might trigger a hashchange.
+                window.location.href = path;
+            }
+        },
+        // Simple feature detection for History Management (borrowed from Modernizr)
+        detectHistorySupport: function() {
+            return !!(window.history && history.pushState);
+        },
+        // Simple feature detection for hashchange (adapted from Modernizr)
+        detectHashchangeSupport: function() {
+            var hash = 'onhashchange', isSupported = hash in window;
+            if (!isSupported && window.setAttribute) {
+                window.setAttribute(hash, "return;");
+                isSupported = typeof window.onhashchange === "function";
+            }
+            return isSupported;
         }
-        return isSupported;
-    }
-};
+    };
 }(jQuery));
