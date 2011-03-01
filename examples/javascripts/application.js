@@ -2,8 +2,11 @@ var APP = (function($) {
     var app = {};
     app.init = function() {
         $.htmlhistory.init();
-        // $.htmlhistory.changeTo('/test/');
+        $(window).bind('htmlhistory', respondToUrl);
     };
+    function respondToUrl() {
+        console.log('respond to url');
+    }
     return app;
 } (jQuery));
 
