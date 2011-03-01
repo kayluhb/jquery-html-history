@@ -2,7 +2,7 @@ var APP = (function($) {
     var app = {};
     app.init = function() {
         $.htmlhistory.init();
-        $.htmlhistory.changeTo('/test/');
+        // $.htmlhistory.changeTo('/test/');
     };
     return app;
 } (jQuery));

@@ -60,20 +60,21 @@
             }
             // Intercept all relative links on the page, to avoid unneccesary page refreshes
             if (his.options.interceptLinks) {
-                $bod.delegate("a[href^=/]", "click", function(e) {
-                    his.changeTo($(this).attr("href"));
+                $bod.delegate('a', 'click', function(e) {
+                    his.changeTo($(this).attr('href'));
                     e.preventDefault();
                 });
             }
             // Ensure all the href=# links on the page don't mess with things
             if (his.options.disableHashLinks) {
-                $bod.delegate("a[href=#]", "click", function(e) {
+                $bod.delegate('a[href=#]', 'click', function(e) {
                     e.preventDefault();
                 });
             }
         },
         // Call to manually navigate the app somewhere
         changeTo: function(path) {
+            var $win = $(window);
             // If we're using History Management, just push an entry
             if (his.options.useHistory && his.supportsHistory()) {
                 window.history.pushState(null, null, path);
