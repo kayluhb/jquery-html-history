@@ -23,6 +23,9 @@ To use, do the following:
         $.htmlhistory.init();
         $(window).bind('htmlhistory', respondToUrl);
     });
+    function respondToUrl() {
+        console.log('respond to url');
+    }
 
 This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
 Modifications made by Caleb Brown (twitter.com/kayluhb)
