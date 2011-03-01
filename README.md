@@ -19,7 +19,8 @@ Browser Support:
     Others  - Other modern browsers probably support some subset of features.
 
 
-To use, do the following:
+Use:
+----
 
     $(function() {
         $.htmlhistory.init();
