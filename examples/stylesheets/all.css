@@ -82,7 +82,7 @@ a { -o-transition-property:color, background-color; -o-transition-duration:.15s;
 /* /CLASSES */
 
 /* LAYOUT */
-#container { background:#fff; height:auto !important; height:500px; margin:0 auto; min-height:500px; text-align:left; width:960px; }
+#container { background:#fff; height:auto !important; height:500px; margin:0 auto; min-height:500px; padding:40px; text-align:left; width:880px; }
 #layout {  }
 header {  }
 article {  }
@@ -92,20 +92,3 @@ footer nav {  }
 footer nav li a {  }
 /* /LAYOUT */
 
-/* This an example of navigation using a CSS sprite */
-header nav ul, nav li { background:none; margin:0; padding:0; }
-header nav { background:url(../images/backgrounds/nav.png) no-repeat; height:33px; overflow:hidden; }
-header nav li { float:left; }
-header nav li a { background:url(../images/backgrounds/nav.png) left top no-repeat; display:block; height:33px; text-indent:-9999px; }
-
-nav li#learning a { background-position:0px 0px; width:185px; }
-nav li#assessment a { background-position:-185px 0px; width:172px; }
-nav li#culture a { background-position:-357px 0px; width:90px; }
-
-nav li#learning a:hover { background-position:0px -66px; }
-nav li#assessment a.on { background-position:-185px -66px; }
-nav li#culture a.on { background-position:-357px -66px; }
-
-nav li#learning a:hover { background-position:0px -33px; }
-nav li#assessment a:hover { background-position:-185px -33px; }
-nav li#culture a:hover { background-position:-357px -33px; }
