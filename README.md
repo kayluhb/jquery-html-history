@@ -8,6 +8,8 @@ This plugin also provides a method to navigate to a URL safely, that will use HT
 Everything degrades gracefully, and supports RESTful client development.
 
 Browser Support:
+----------------
+
     Chrome  - Any recent version of Chrome supports everything.
     Safari  - Any recent version of Safari supports everything.
     Firefox - Newer versions of Firefox support the hashchange event
