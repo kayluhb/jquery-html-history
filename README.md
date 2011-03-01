@@ -30,7 +30,10 @@ Use:
         console.log('respond to url');
     }
 
-This script must be used on a server for testing, local or otherwise.  I need to figure out a way to make it work locally.
+This script must be used on a server for testing, local or otherwise.  I need to figure out a way to make it work from the file system.
+
+License:
+--------
 
 This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).  
 Modifications made by Caleb Brown (twitter.com/kayluhb)  
