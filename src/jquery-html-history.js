@@ -28,7 +28,7 @@
         options: {
             useHistory: true, // whether we use HTML5 History Management to change the current path
             useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
-            pollingInterval: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
+            poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
             interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
             disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
         },
@@ -50,12 +50,12 @@
                 // Hashchange support for older browsers (IE6/7)
                 if (!his.supportsHashchange()) {
                     lastHash = window.location.hash;
-                    setInterval(function() {
+                    requestInterval(function() {
                         if (lastHash !== window.location.hash) {
                             $win.trigger(hashevt);
                             lastHash = window.location.hash;
                         }
-                    }, his.options.pollingInterval);
+                    }, his.options.poll);
                 }
             }
             // Intercept all relative links on the page, to avoid unneccesary page refreshes
@@ -103,3 +103,41 @@
         }
     };
 }(jQuery));
+// requestAnimationFrame() shim by Paul Irish
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = (function() {
+	return  window.requestAnimationFrame   || 
+			window.webkitRequestAnimationFrame || 
+			window.mozRequestAnimationFrame    || 
+			window.oRequestAnimationFrame      || 
+			window.msRequestAnimationFrame     || 
+			function(/* function */ callback, /* DOMElement */ element){
+          window.setTimeout(callback, 1000 / 60);
+			};
+})();
+/**
+ * Behaves the same as setInterval except uses requestAnimationFrame() where possible for better performance
+ * @param {function} fn The callback function
+ * @param {int} delay The delay in milliseconds
+ */
+window.requestInterval = function(fn, delay) {
+	if( !window.requestAnimationFrame     && 
+		!window.webkitRequestAnimationFrame && 
+		!window.mozRequestAnimationFrame    && 
+		!window.oRequestAnimationFrame      && 
+		!window.msRequestAnimationFrame)
+			return window.setInterval(fn, delay);
+	var start = new Date().getTime(),
+		handle = new Object();
+	function loop() {
+		var current = new Date().getTime(),
+			delta = current - start;
+		if(delta >= delay) {
+			fn.call();
+			start = new Date().getTime();
+		}
+		handle.value = requestAnimFrame(loop);
+	};
+	handle.value = requestAnimFrame(loop);
+	return handle;
+}
