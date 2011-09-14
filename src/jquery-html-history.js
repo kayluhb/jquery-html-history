@@ -1,3 +1,5 @@
+//  https://github.com/kayluhb/jquery-html-history
+//
 // Plugin that provides a "htmlhistory" event on the window object, notifying an application when the URL changes
 // This is accomplished by watching the hash, using the hashchange event from HTML5 or a polling interval in older browsers.
 // In addition, in some modern browsers, HTML5 History Management is used to support changing the URL's path without reloading the page.
