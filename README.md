@@ -30,6 +30,19 @@ Use:
         console.log('respond to url');
     }
 
+
+Options:
+--------
+
+    options: {
+        useHistory: true, // whether we use HTML5 History Management to change the current path
+        useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
+        poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
+        interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
+        disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
+    },
+
+
 This script must be used on a server for testing, local or otherwise.  I need to figure out a way to make it work from the file system.
 
 License:
