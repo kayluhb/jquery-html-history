@@ -22,12 +22,33 @@ Browser Support:
 Use:
 ----
 
+include jquery  
+include the jquery-html-history.min.js  
+
+onload call:
+
     $(function() {
-        $.htmlhistory.init();
+        // initialize the plugin
+        $.htmlhistory.init({
+            useHistory: true,
+            useHashchange: true,
+            poll: 250,
+            interceptLinks: true,
+            disableHashLinks: true
+        });
+        // bind the 'htmlhistory' event to the window
         $(window).bind('htmlhistory', respondToUrl);
     });
+
+    function extract(s) {
+        return s.split("#").join("/").split("/").pop();
+    }
+
     function respondToUrl() {
-        console.log('respond to url');
+        var n = extract(window.location.hash) || extract(window.location.pathname),
+        path = window.location.href.split("#").join("/");
+        // respond to the url however you would like
+        console.log('respond to url', n, path);
     }
 
 
