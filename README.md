@@ -43,7 +43,7 @@ onload call:
     });
 
     function onURL() {
-        var path = $.htmlhistory.url();;
+        var path = $.htmlhistory.url();
         // respond to the url however you would like
         console.log('respond to url', path);
     }

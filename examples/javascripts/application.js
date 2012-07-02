@@ -7,19 +7,17 @@ var APP = (function($) {
             useHashchange: true,
             poll: 250,
             interceptLinks: true,
-            disableHashLinks: true
+            disableHashLinks: true,
+            hash: '#!'
         });
         // bind the 'htmlhistory' event to the window
-        $(window).bind('htmlhistory', respondToUrl);
+        $(window).bind('htmlhistory', onURL);
     };
-    function extract(s) {
-        return s.split("#").join("/").split("/").pop();
-    }
-    function respondToUrl() {
-        var section = extract(window.location.hash) || extract(window.location.pathname),
-        path = window.location.href.split("#").join("/");
+
+    function onURL() {
+        var path = $.htmlhistory.url();
         // respond to the url however you would like
-        console.log('respond to url', section, path);
+        console.log('respond to url', path);
     }
     $(app.init);
     return app;
