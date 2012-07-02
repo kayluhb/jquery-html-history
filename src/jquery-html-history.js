@@ -18,9 +18,12 @@
 // This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
 // Modifications made by Caleb Brown (twitter.com/kayluhb)
 // Some of the code in this plugin was adapted from Modernizr, which is also available under an MIT License.
+// You should make sure the request_interval.js is included in your window for the most optimized support.
 (function($) {
     // can use $(window).bind("htmlhistory", fn) or $(window).htmlhistory(fn)
-    var evt = 'htmlhistory', hashevt = 'hashchange', hash = 'onhashchange';
+    var evt = 'htmlhistory',
+        hashevt = 'hashchange',
+        hash = 'onhashchange';
     
     $.fn.htmlhistory = function(handler) {
         return handler ? this.bind(evt, handler) : this.trigger(evt);
@@ -32,11 +35,15 @@
             useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
             poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
             interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
-            disableHashLinks: true // do we ensure all links with href=# are not followed (this would mess with our history)?
+            disableHashLinks: true, // do we ensure all links with href=# are not followed (this would mess with our history)?
+            hash: '#!' // the hash to add if using hashes
         },
         // call this once when your app is ready to use htmlhistory
         init: function(options) {
-            var lastHash, $win = $(window), $bod = $('body');
+            var lastHash,
+                $win = $(window),
+                $bod = $('body');
+
             $.extend(his.options, options);
             // Listen to the HTML5 "popstate" event, if supported and desired
             if (his.options.useHistory && his.supportsHistory()) {
@@ -84,10 +91,19 @@
             } else {
                 // Make sure there's a hash (going from foo.com#bar to foo.com would trigger a reload in Firefox, sadly)
                 if (path.indexOf("#") < 0) {
-                    path = "#" + path;
+                    path = his.options.hash + path;
                 }
                 // Otherwise, navigate to the new URL.  Might reload the browser.  Might trigger a hashchange.
                 window.location.href = path;
+            }
+        },
+        // Returns the current, cleaned up url
+        url: function() {
+            // If we're using History Management, just push an entry
+            if (his.options.useHistory && his.supportsHistory()) {
+                return window.location.pathname;
+            } else {
+                return window.location.hash.split(his.options.hash).join('');
             }
         },
         // Simple feature detection for History Management (borrowed from Modernizr)
@@ -105,41 +121,3 @@
         }
     };
 }(jQuery));
-// requestAnimationFrame() shim by Paul Irish
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = (function() {
-	return  window.requestAnimationFrame   || 
-			window.webkitRequestAnimationFrame || 
-			window.mozRequestAnimationFrame    || 
-			window.oRequestAnimationFrame      || 
-			window.msRequestAnimationFrame     || 
-			function(/* function */ callback, /* DOMElement */ element){
-          window.setTimeout(callback, 1000 / 60);
-			};
-})();
-/**
- * Behaves the same as setInterval except uses requestAnimationFrame() where possible for better performance
- * @param {function} fn The callback function
- * @param {int} delay The delay in milliseconds
- */
-window.requestInterval = function(fn, delay) {
-	if( !window.requestAnimationFrame     && 
-		!window.webkitRequestAnimationFrame && 
-		!window.mozRequestAnimationFrame    && 
-		!window.oRequestAnimationFrame      && 
-		!window.msRequestAnimationFrame)
-			return window.setInterval(fn, delay);
-	var start = new Date().getTime(),
-		handle = new Object();
-	function loop() {
-		var current = new Date().getTime(),
-			delta = current - start;
-		if(delta >= delay) {
-			fn.call();
-			start = new Date().getTime();
-		}
-		handle.value = requestAnimFrame(loop);
-	};
-	handle.value = requestAnimFrame(loop);
-	return handle;
-}
