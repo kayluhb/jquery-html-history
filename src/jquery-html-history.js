@@ -17,13 +17,12 @@
 
 // This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
 // Modifications made by Caleb Brown (twitter.com/kayluhb)
-// Some of the code in this plugin was adapted from Modernizr, which is also available under an MIT License.
 
 (function($) {
     // can use $(window).bind("htmlhistory", fn) or $(window).htmlhistory(fn)
     var evt = 'htmlhistory',
-        hashevt = 'hashchange',
-        hash = 'onhashchange';
+        hash = 'onhashchange',
+        hashevt = 'hashchange';
     
     $.fn.htmlhistory = function(handler) {
         return handler ? this.bind(evt, handler) : this.trigger(evt);
@@ -37,6 +36,7 @@
             poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
             interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
             disableHashLinks: true, // do we ensure all links with href=# are not followed (this would mess with our history)?
+            triggerOnLoad: true, // send the hash event on load
             hash:'#!'
         },
 
@@ -49,28 +49,28 @@
             $.extend(his.options, options);
             
             // Listen to the HTML5 "popstate" event, if supported and desired
-            if (his.options.useHistory && his.supportsHistory()) {
-                $win.bind("popstate", function(e) {
+            if (his.options.useHistory && Modernizr.history) {
+                $win.bind('popstate', function(e) {
                     $win.trigger(evt);
                 });
             }
             
             // Listen to the HTML5 "hashevent" event, if supported and desired
-            if (his.options.useHashchange) {
+            if (his.options.useHashchange && !Modernizr.history) {
                 $win.bind(hashevt, function(e) {
                     $win.trigger(evt);
                 });
-
                 // Hashchange support for older browsers (IE6/7)
-                if (!his.supportsHashchange()) {
+                if (!Modernizr.hashchange) {
                     lastHash = window.location.hash;
                     requestInterval(function() {
                         if (lastHash !== window.location.hash) {
-                            $win.trigger(hashevt);
+                            $win.trigger(evt);
                             lastHash = window.location.hash;
                         }
                     }, his.options.poll);
                 }
+                if (his.options.triggerOnLoad) { $win.trigger(evt); }
             }
             
             // Intercept all relative links on the page, to avoid unneccesary page refreshes
@@ -92,17 +92,15 @@
         // Call to manually navigate the app somewhere
         changeTo: function(path) {
             var $win = $(window);
-            
             // If we're using History Management, just push an entry
-            if (his.options.useHistory && his.supportsHistory()) {
+            if (his.options.useHistory && Modernizr.history) {
                 window.history.pushState(null, null, path);
                 $win.trigger(evt);
             } else {
                 // Make sure there's a hash (going from foo.com#bar to foo.com would trigger a reload in Firefox, sadly)
-                if (path.indexOf("#") < 0) {
+                if (path.indexOf('#') < 0) {
                     path = his.options.hash + path;
                 }
-                
                 // Otherwise, navigate to the new URL.  Might reload the browser.  Might trigger a hashchange.
                 window.location.href = path;
             }
@@ -110,29 +108,12 @@
 
         // Return the current url
         url: function() {
-            var $win = $(window);
-            
             // If we're using History Management, just push an entry
-            if (his.options.useHistory && his.supportsHistory()) {
+            if (his.options.useHistory && Modernizr.history) {
                 return window.location.pathname;
             } else {
                 return window.location.hash.split(his.options.hash).join('');
             }
-        },
-
-        // Simple feature detection for History Management (borrowed from Modernizr)
-        supportsHistory: function() {
-            return !!(window.history && history.pushState);
-        },
-
-        // Simple feature detection for hashchange (adapted from Modernizr)
-        supportsHashchange: function() {
-            var isSupported = hash in window;
-            if (!isSupported && window.setAttribute) {
-                window.setAttribute(hash, "return;");
-                isSupported = typeof window.onhashchange === "function";
-            }
-            return isSupported;
         }
     };
 }(jQuery));

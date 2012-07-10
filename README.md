@@ -24,6 +24,7 @@ Use:
 
 include jquery  
 include the request-interval.js  
+include the modernizr.min.js  
 include the jquery-html-history.min.js  
 
 onload call:
@@ -36,6 +37,7 @@ onload call:
             poll: 250,
             interceptLinks: true,
             disableHashLinks: true,
+            triggerOnLoad: true,
             hash: '#!'
         });
         // bind the 'htmlhistory' event to the window
@@ -58,6 +60,7 @@ Options:
         poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
         interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
         disableHashLinks: true, // do we ensure all links with href=# are not followed (this would mess with our history)?
+        triggerOnLoad: true, // send the hash event on load
         hash: '#!' // the hash to add if using hashes
     },
 
@@ -69,4 +72,3 @@ License:
 
 This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).  
 Modifications made by Caleb Brown (twitter.com/kayluhb)  
-Some of the code in this plugin was adapted from Modernizr, which is also available under an MIT License.
