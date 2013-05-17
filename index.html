@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>jQuery HTML history by kayluhb</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/kayluhb/jquery-html-history">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>jQuery HTML history</h1>
+            <h2>jQuery plugin for history management</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/kayluhb/jquery-html-history/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/kayluhb/jquery-html-history/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>jQuery HTML5 History Plugin</h1>
+
+<p>Plugin that provides an "htmlhistory" event on the window object, notifying an application when the URL changes.<br>
+This is accomplished by watching the hash, using the hashchange event from HTML5 or a polling interval in older browsers.<br>
+In addition, in some modern browsers, HTML5 History Management is used to support changing the URL's path without reloading the page.<br>
+This plugin also provides a method to navigate to a URL safely, that will use HTML5 History Management to avoid a page load.
+Everything degrades gracefully, and supports RESTful client development.</p>
+
+<h2>Browser Support:</h2>
+
+<pre><code>Chrome  - Any recent version of Chrome supports everything.
+Safari  - Any recent version of Safari supports everything.
+Firefox - Newer versions of Firefox support the hashchange event
+          Firefox 4 betas also support HTML5 History Management
+Internet Explorer - IE8 supports hashchange
+          IE6 and 7 receive inferior hashchange support through a polling interval.
+Others  - Other modern browsers probably support some subset of features.
+</code></pre>
+
+<h2>Use:</h2>
+
+<p>include jquery<br>
+include the request-interval.js<br>
+include the modernizr.min.js<br>
+include the jquery-html-history.min.js  </p>
+
+<p>onload call:</p>
+
+<pre><code>$(function() {
+    // initialize the plugin
+    $.htmlhistory.init({
+        useHistory: true,
+        useHashchange: true,
+        poll: 250,
+        interceptLinks: true,
+        disableHashLinks: true,
+        triggerOnLoad: true,
+        hash: '#!'
+    });
+    // bind the 'htmlhistory' event to the window
+    $(window).bind('htmlhistory', onURL);
+});
+
+function onURL() {
+    var path = $.htmlhistory.url();
+    // respond to the url however you would like
+    console.log('respond to url', path);
+}
+</code></pre>
+
+<h2>Options:</h2>
+
+<pre><code>options: {
+    useHistory: true, // whether we use HTML5 History Management to change the current path
+    useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
+    poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
+    interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
+    disableHashLinks: true, // do we ensure all links with href=# are not followed (this would mess with our history)?
+    triggerOnLoad: true, // send the hash event on load
+    hash: '#!' // the hash to add if using hashes
+},
+</code></pre>
+
+<p>This script must be used on a server for testing, local or otherwise.  I need to figure out a way to make it work from the file system.</p>
+
+<h2>License:</h2>
+
+<p>This plugin was originally authored by Ben Cherry (<a href="mailto:bcherry@gmail.com">bcherry@gmail.com</a>), and is released under an MIT License (do what you want with it).<br>
+Modifications made by Caleb Brown (twitter.com/kayluhb)  </p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/kayluhb">kayluhb</a> can be found on <a href="https://github.com/kayluhb/jquery-html-history">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
