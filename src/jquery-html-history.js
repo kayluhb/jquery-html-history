@@ -82,7 +82,7 @@
 
             // Intercept all relative links on the page, to avoid unneccesary page refreshes
             if (his.options.interceptLinks) {
-                $bod.on('a[href=^"/"]', 'click', function(e) {
+                $bod.on('a[href^="/"]', 'click', function(e) {
                     his.changeTo($(this).attr('href'));
                     e.preventDefault();
                 });
