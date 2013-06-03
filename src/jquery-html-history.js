@@ -19,13 +19,13 @@
 // Modifications made by Caleb Brown (twitter.com/kayluhb)
 
 (function($) {
-    // can use $(window).bind("htmlhistory", fn) or $(window).htmlhistory(fn)
+    // can use $(window).on("htmlhistory", fn) or $(window).htmlhistory(fn)
     var evt = 'htmlhistory',
         hash = 'onhashchange',
         hashevt = 'hashchange';
 
     $.fn.htmlhistory = function(handler) {
-        return handler ? this.bind(evt, handler) : this.trigger(evt);
+        return handler ? this.on(evt, handler) : this.trigger(evt);
     };
 
     var his = $.htmlhistory = {
@@ -44,32 +44,35 @@
             disableHashLinks: true,
             // send the hash event on load
             triggerOnLoad: true,
+            // the hash to use in the URL
             hash:'#!'
         },
 
         // call this once when your app is ready to use htmlhistory
         init: function(options) {
-            var lastHash,
+            var lastHash = window.location.hash,
                 $win = $(window),
                 $bod = $('body');
 
             $.extend(his.options, options);
 
             // Listen to the HTML5 "popstate" event, if supported and desired
-            if (his.options.useHistory && Modernizr.history) {
-                $win.bind('popstate', function(e) {
-                    $win.trigger(evt);
+            if (Modernizr.history && his.options.useHistory) {
+                window.addEventListener('popstate', function(e) {
+                    if (e.state !== null){
+                        $win.trigger(evt);
+                    }
                 });
             }
 
             // Listen to the HTML5 "hashevent" event, if supported and desired
-            if (his.options.useHashchange && !Modernizr.history) {
-                $win.bind(hashevt, function(e) {
+            if (!Modernizr.history && his.options.useHashchange) {
+                $win.on(hashevt, function(e) {
                     $win.trigger(evt);
                 });
+
                 // Hashchange support for older browsers (IE6/7)
                 if (!Modernizr.hashchange) {
-                    lastHash = window.location.hash;
                     requestInterval(function() {
                         if (lastHash !== window.location.hash) {
                             $win.trigger(evt);
@@ -77,12 +80,11 @@
                         }
                     }, his.options.poll);
                 }
-                if (his.options.triggerOnLoad) { $win.trigger(evt); }
             }
 
             // Intercept all relative links on the page, to avoid unneccesary page refreshes
             if (his.options.interceptLinks) {
-                $bod.on('a[href^="/"]', 'click', function(e) {
+                $bod.on('a[href=^"/"]', 'click', function(e) {
                     his.changeTo($(this).attr('href'));
                     e.preventDefault();
                 });
@@ -94,14 +96,24 @@
                     e.preventDefault();
                 });
             }
+
+            if (his.options.triggerOnLoad) {
+                if (Modernizr.history) {
+                    $win.trigger(evt);
+                } else if (lastHash === undefined || lastHash === "") {
+                    this.changeTo(window.location.pathname);
+                } else {
+                    $win.trigger(evt);
+                }
+            }
         },
 
         // Call to manually navigate the app somewhere
         changeTo: function(path) {
             var $win = $(window);
             // If we're using History Management, just push an entry
-            if (his.options.useHistory && Modernizr.history) {
-                window.history.pushState(null, null, path);
+            if (Modernizr.history && his.options.useHistory) {
+                window.history.pushState(path, null, path);
                 $win.trigger(evt);
             } else {
                 // Make sure there's a hash (going from foo.com#bar to foo.com would trigger a reload in Firefox, sadly)
@@ -116,7 +128,7 @@
         // Return the current url
         url: function() {
             // If we're using History Management, just push an entry
-            if (his.options.useHistory && Modernizr.history) {
+            if (Modernizr.history && his.options.useHistory) {
                 return window.location.pathname;
             } else {
                 return window.location.hash.split(his.options.hash).join('');
