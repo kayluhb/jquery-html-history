@@ -116,6 +116,8 @@ Maintained by Caleb Brown [twitter.com/kayluhb](http://twitter.com/kayluhb)
 This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
 
 
+***
+
 The MIT License (MIT)
 
 Copyright (c) 2014 @kayluhb
