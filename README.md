@@ -1,9 +1,9 @@
 jQuery HTML5 History Plugin
 ===========================
 
-Plugin that provides an "htmlhistory" event on the window object, notifying an application when the URL changes.  
-This is accomplished by watching the hash, using the hashchange event from HTML5 or a polling interval in older browsers.  
-In addition, in some modern browsers, HTML5 History Management is used to support changing the URL's path without reloading the page.  
+Plugin that provides an "htmlhistory" event on the window object, notifying an application when the URL changes.
+This is accomplished by watching the hash, using the hashchange event from HTML5 or a polling interval in older browsers.
+In addition, in some modern browsers, HTML5 History Management is used to support changing the URL's path without reloading the page.
 This plugin also provides a method to navigate to a URL safely, that will use HTML5 History Management to avoid a page load.
 Everything degrades gracefully, and supports RESTful client development.
 
@@ -22,10 +22,10 @@ Browser Support:
 Use:
 ----
 
-include jquery  
-include the request-interval.js  
-include the modernizr.min.js  
-include the jquery-html-history.min.js  
+include jquery.
+include the request-interval.js
+include the modernizr.min.js
+include the jquery-html-history.min.js
 
 onload call:
 
@@ -56,13 +56,54 @@ Options:
 
     options: {
         useHistory: true, // whether we use HTML5 History Management to change the current path
+
         useHashchange: true, // whether we use HTML5 Hashchange to listen to the URL hash
+
         poll: 250, // when using Hashchange in browsers without it, how often to poll the hash (in ms)
+
         interceptLinks: true, // do we intercept all relative links to avoid some page reloads?
+
         disableHashLinks: true, // do we ensure all links with href=# are not followed (this would mess with our history)?
+
         triggerOnLoad: true, // send the hash event on load
+
         hash: '#!' // the hash to add if using hashes
     },
+
+Example:
+--------
+
+To view the example, run the following command from your terminal in the root directory of the project
+
+    python -m SimpleHTTPServer
+
+Navigate to [localhost:8000/examples/](http://localhost:8000/examples/) in your browser.
+
+
+Build:
+-------
+
+We are compiling the JavaScript into one file with [npm](https://www.npmjs.org/) and [Grunt](http://gruntjs.com/)).  We assume you have npm installed.
+
+Install grunt client with
+
+    sudo npm install -g grunt-cli
+
+***
+
+Assuming that the Grunt CLI has been installed, it's very easy to start working with Grunt:
+
+Change to the project's root directory.
+
+Install project dependencies with
+
+    npm install
+
+Run Grunt with
+
+    grunt
+
+That's really all there is to it. Installed Grunt tasks can be listed by running grunt --help.
 
 
 This script must be used on a server for testing, local or otherwise.  I need to figure out a way to make it work from the file system.
@@ -70,5 +111,5 @@ This script must be used on a server for testing, local or otherwise.  I need to
 License:
 --------
 
-This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).  
-Modifications made by Caleb Brown (twitter.com/kayluhb)  
+This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
+Modifications made by Caleb Brown (twitter.com/kayluhb)

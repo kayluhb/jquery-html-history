@@ -1,94 +1,494 @@
-/* 
-html5doctor.com Reset Stylesheet v1.6.1
-Last Updated:2010-09-17
-Author:Richard Clark - http://richclarkdesign.com 
+/*
+  $link: red;
+  $highlight: lime;
+  $hover: green;
+  $placeholder: whiteSmoke;
 */
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}body{line-height:1;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}nav ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:none;}a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0;}ins{background-color:#ff9;color:#000;text-decoration:none;}mark{background-color:#ff9;color:#000;font-style:italic;font-weight:700;}del{text-decoration:line-through;}abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help;}table{border-collapse:collapse;border-spacing:0;}hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0;}input,select{vertical-align:middle;}
-:focus { outline:0; }
-/* /RESET */
-/* HTML */
-html, body { background-color:#cccccc; height:100%; text-align:center; }
-html { overflow:auto; -webkit-font-smoothing:antialiased; }
-body,div,dd,dl,dt,h1,h2,h3,h4,h5,h6,li,ol,span,td,th,ul { color:#444; font:15px arial, verdana, sans-serif; line-height:1.22; }
-a { color:#f47a4d; text-decoration:none; }
-a:hover, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover { color:#c01339; text-decoration:none; }
-img { border:none; }
-p { padding:10px 0; }
-strong, b { font-weight:bold; }
-em, i { font-style:italic; }
-h1, h2, h3, h4, h5, h6 { color:#000; font-weight:bold; padding:10px 0; text-rendering:optimizeLegibility; }
-h1, h1 a { font-size:26px; padding-top:0; }
-h2, h2 a { font-size:24px; }
-h3, h3 a { font-size:22px; }
-h4, h4 a { font-size:18px; }
-h5, h5 a { font-size:16px; }
-h6, h6 a { font-size:14px; }
-table { padding:10px 0;  width:100%; }
-th { font-weight:bold; }
-td, th { padding:5px; }
-ul, ol { padding:10px 10px 10px 30px; }
-ul li { background:transparent url(../images/bullet.gif) 0 6px no-repeat; line-height:1.22; list-style:none; padding:0 0 8px 10px; }
-ol {  }
-ol li { list-style:decimal; margin:0 0 0 10px; padding:0 0 8px 0; }
-blockquote { color:#76888a; font-size:16px; font-style:italic; line-height:1.22; padding:10px 0; }
-blockquote p { padding:0 }
-hr { border:0 #e2e6e6 solid; border-top-width:1px; clear:both; display:block; height:1px; margin:10px 0; }
-code, pre { font-family:"Courier New", monospace, serif; font-size:1em; }
-sub { vertical-align:sub; font-size:smaller; }
-sup { vertical-align:super; font-size:smaller; }
-/* inputs/form fields */
-select, input, textarea { font:99% arial,helvetica,sans-serif; }
-input, select { vertical-align:middle; }
-button { overflow:visible; width:auto; }
-button, label, select, input[type='button'], input[type='submit'], input[type='file'] { cursor:pointer; } 
-input[type='text'], input[type='email'], input[type='password'], input[type='url'], input.input-field, textarea { border:1px solid #bccccd; margin-bottom:8px; padding:2px; width:400px; }
-input[type="search"] { -webkit-appearance:textfield; }
-input[type="radio"] { vertical-align:text-bottom; }
-input[type="checkbox"] { vertical-align:bottom; *vertical-align:baseline; }
-textarea { overflow:auto; }
-select { border:1px solid #bccccd; }
-fieldset { margin-bottom:8px; }
-label { font-weight:bold; font-size:13px; }
-label.radio { font-size:13px; }
 
-::selection { background:#c01339; color:#fff; }
-::-moz-selection { background:#c01339; color:#fff; } 
-::-webkit-input-placeholder { color:#282218; }
-:-moz-placeholder { color:#282218; }
+/* apply a natural box layout model to all elements [http://www.paulirish.com/2012/box-sizing-border-box-ftw/] */
+*,
+*:before,
+*:after {
+   -moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+        box-sizing:border-box;
+}
 
-a:focus, button:focus, input:focus, label:focus, select:focus, textarea:focus { outline:1px dotted #c01339; }
+/* HTML5 display definitions */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+  display:block;
+}
 
-/* Put all the transition elements here */
-a { -o-transition-property:color, background-color; -o-transition-duration:.15s; -o-transition-timing-function:ease-in; -moz-transition-property:color, background-color; -moz-transition-duration:.15s; -moz-transition-timing-function:ease-in; -webkit-transition-property:color, background-color; -webkit-transition-duration:.15s; -webkit-transition-timing-function:ease-in; transition-property:color, background-color; transition-duration:.15s; transition-timing-function:ease-in; }
-/* /HTML */
+audio,
+canvas,
+video {
+  display:inline-block;
+  *display:inline;
+  *zoom:1;
+}
 
-/* CLASSES */
-.hidden { display:none; } 
-.invisible { visibility:hidden; }
-.clear, .clear-left, .clear-right { clear:both; display:block; overflow:hidden; visibility:hidden; width:0; height:0; }
-.clearfix:after, .clearfix-left:after, .clearfix-right:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
-.clearfix, .clearfix-left:after, .clearfix-right:after { display:inline-block; }
-* html .clearfix, * html .clearfix-left:after, * html .clearfix-right:after { height:1%; } /* Hides from IE-mac \*/
-.clearfix, .clearfix-left:after, .clearfix-right:after { display:block; }
-.clearfix-left:after, .clear-left { clear:left; }
-.clearfix-right:after, .clear-right { clear:right; }
-.align-left { text-align:left; }
-.align-center { text-align:center; }
-.align-right { text-align:right; }
-.float-left { float:left; }
-.float-right { float:right; }
-.inline { display:inline; }
-.alert, .required { color:#ff0000; }
-/* /CLASSES */
+audio:not([controls]) {
+  display:none;
+}
 
-/* LAYOUT */
-#container { background:#fff; height:auto !important; height:500px; margin:0 auto; min-height:500px; padding:40px; text-align:left; width:880px; }
-#layout {  }
-header {  }
-article {  }
-section {  }
-footer {  }
-footer nav {  }
-footer nav li a {  }
-/* /LAYOUT */
+[hidden] {
+  display:none;
+}
 
+/* Base */
+html {
+  font-size:100%;
+  overflow-y:auto;
+  -ms-overflow-style:-ms-autohiding-scrollbar;
+  -ms-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%;
+}
+
+body {
+  background:#fff;
+  margin:0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  color:#444;
+  font:15px sans-serif;
+}
+
+/* Links */
+a {
+  color:red;
+  text-decoration:none;
+}
+
+a:visited {
+
+}
+
+a:hover {
+  color:green;
+  text-decoration:none;
+}
+
+a:focus {
+  outline:thin dotted;
+}
+
+a:hover,
+a:active {
+  outline:0;
+}
+
+/* Typography */
+p {
+  margin:10px 0;
+  padding:0;
+}
+
+abbr[title] {
+  border-bottom:1px dotted;
+}
+
+b,
+strong {
+  font-weight:bold;
+}
+
+blockquote {
+  color:#76888a;
+  font-size:16px;
+  font-style:italic;
+  margin:1em 40px;
+  padding:10px 0;
+}
+
+blockquote p {
+  margin:0;
+}
+
+em,
+i,
+dfn {
+  font-style:italic;
+}
+
+hr {
+  border:0 #e2e6e6 solid;
+  border-top-width:1px;
+  clear:both;
+  display:block;
+  height:1px;
+  margin:10px 0;
+}
+
+ins {
+  background:#ff9;
+  color:#000;
+  text-decoration:none;
+}
+
+mark {
+  background:#ff0;
+  color:#000;
+  font-style:italic;
+  font-weight:bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight:bold;
+  margin:10px 0;
+  padding:0;
+  text-rendering:optimizeLegibility;
+}
+
+h1 {
+  font-size:34px;
+  margin-top:0;
+}
+
+h2 {
+  font-size:30px;
+}
+
+h3 {
+  font-size:26px;
+}
+
+h4 {
+  font-size:22px;
+}
+
+h5 {
+  font-size:18px;
+}
+
+h6 {
+  font-size:14px;
+}
+
+/* Redeclare monospace font family:h5bp.com/j */
+pre,
+code,
+kbd,
+samp {
+  font-family:monospace, monospace;
+  _font-family:'courier new', monospace;
+  font-size:1em;
+}
+
+/* Improve readability of pre-formatted text in all browsers */
+pre {
+  white-space:pre;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+}
+
+q {
+  quotes:none;
+}
+
+q:before,
+q:after {
+  content:"";
+  content:none;
+}
+
+small {
+  font-size:85%;
+}
+
+/* Position subscript and superscript content without affecting line-height:h5bp.com/k */
+sub,
+sup {
+  font-size:75%;
+  line-height:0;
+  position:relative;
+  vertical-align:baseline;
+}
+
+sup {
+  top:-0.5em;
+}
+
+sub {
+  bottom:-0.25em;
+}
+
+/* Lists */
+dd {
+  margin:0 0 0 40px;
+}
+
+ul,
+ol {
+  padding:10px 10px 10px 30px;
+}
+
+ul li {
+  background:transparent 0 6px no-repeat;
+  background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACxJREFUeNpidHFxYQACQSA2BuI9LFDObqjALCYoA4RBIA0ksAckAxVIBwgwAMyyBfjDQxpjAAAAAElFTkSuQmCC);
+  list-style:none;
+  padding:0 0 8px 10px;
+}
+
+ol {
+}
+
+ol li {
+  list-style:decimal;
+  margin:0 0 0 10px;
+  padding:0 0 8px 0;
+}
+
+nav ul,
+nav ol,
+nav li {
+  background:none;
+  margin:0;
+  padding:0;
+}
+
+img {
+  border:0;
+  -ms-interpolation-mode:bicubic;
+  vertical-align:middle;
+}
+
+/* Correct overflow not hidden in IE9 */
+svg:not(:root) {
+  overflow:hidden;
+}
+
+/* Figures */
+figure {
+  margin:0;
+}
+
+/* Forms */
+form {
+  margin:0;
+}
+
+fieldset {
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+/* Indicate that 'label' will shift focus to the associated form element */
+label {
+  cursor:pointer;
+  font-weight:bold;
+}
+
+legend {
+  border:0;
+  *margin-left:-7px;
+  padding:0;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size:100%;
+  margin:0;
+  vertical-align:baseline;
+  *vertical-align:middle;
+}
+
+button,
+input {
+  line-height:normal;
+  *overflow:visible;
+}
+
+button:active,
+.button:active {
+  position:relative;
+  top:1px;
+}
+
+/* Reintroduce inner spacing in 'table' to avoid overlap and whitespace issues in IE6/7 */
+table button,
+table input {
+  *overflow:auto;
+}
+
+button,
+select,
+input[type="button"],
+input[type="file"],
+input[type="reset"],
+input[type="submit"] {
+  cursor:pointer;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance:button;
+}
+
+/* Consistent box sizing and appearance  */
+input[type="checkbox"],
+input[type="radio"] {
+  padding:0;
+  *height:13px;
+  *width:13px;
+}
+
+input[type="search"] {
+  -webkit-appearance:textfield;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance:none;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border:0;
+  padding:0;
+}
+
+/* reset weird iOS styles */
+input[type="text"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea {
+  border:1px solid #bccccd;
+  padding:2px;
+-webkit-appearance:none;
+   -moz-border-radius:0;
+-webkit-border-radius:0;
+        border-radius:0;
+   -moz-transition:border-color 0.15s ease-in;
+    -ms-transition:border-color 0.15s ease-in;
+     -o-transition:border-color 0.15s ease-in;
+-webkit-transition:border-color 0.15s ease-in;
+        transition:border-color 0.15s ease-in;
+}
+
+input[type="number"] {
+  width:40px;
+}
+
+textarea {
+  overflow:auto;
+  resize:vertical;
+  vertical-align:top;
+}
+
+/* Colors for form validity */
+input:valid,
+textarea:valid {}
+
+input:invalid,
+textarea:invalid {}
+
+/* Tables */
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+  padding:10px 0;
+}
+
+td,
+th {
+  padding:5px;
+}
+
+th {
+  font-weight:bold;
+}
+
+td {
+  vertical-align:top;
+}
+
+/* Fun things */
+::-moz-selection {
+  background:lime;
+  color:#fff;
+  text-shadow:none;
+}
+
+::selection {
+  background:lime;
+  color:#fff;
+  text-shadow:none;
+}
+
+::-webkit-input-placeholder {
+  color:whiteSmoke;
+}
+
+:-moz-placeholder {
+  color:whiteSmoke;
+}
+
+:-ms-input-placeholder {
+  color:whiteSmoke;
+}
+
+input.placeholder {
+  color:whiteSmoke;
+}
+
+/* Focus */
+a:focus,
+button:focus,
+label:focus {
+  outline:1px dashed #c01339;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border:1px solid #5c96aa;
+  outline:none;
+   -moz-box-shadow:0 0 5px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow:0 0 5px rgba(0, 0, 0, 0.3);
+        box-shadow:0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Transition elements */
+a,
+button,
+.button {
+   -moz-transition:color 0.15s ease-in;
+    -ms-transition:color 0.15s ease-in;
+     -o-transition:color 0.15s ease-in;
+-webkit-transition:color 0.15s ease-in;
+        transition:color 0.15s ease-in;
+     -o-transition-property:background-color, border-color, color, opacity;
+   -moz-transition-property:background-color, border-color, color, opacity;
+    -ms-transition-property:background-color, border-color, color, opacity;
+-webkit-transition-property:background-color, border-color, color, opacity;
+        transition-property:background-color, border-color, color, opacity;
+}
