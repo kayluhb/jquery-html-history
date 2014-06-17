@@ -112,4 +112,4 @@ License:
 --------
 
 This plugin was originally authored by Ben Cherry (bcherry@gmail.com), and is released under an MIT License (do what you want with it).
-Modifications made by Caleb Brown (twitter.com/kayluhb)
+Modifications made by Caleb Brown ([twitter.com/kayluhb](http://twitter.com/kayluhb))
