@@ -30,6 +30,11 @@ module.exports = function(grunt) {
             '<%= DIRS.src %>request-interval.js',
             '<%= DIRS.src %>jquery-html-history.js',
           ],
+          '<%= DIRS.build %>jquery-html-history.sans-modern.js': [
+            // Our files
+            '<%= DIRS.src %>request-interval.js',
+            '<%= DIRS.src %>jquery-html-history.js',
+          ],
         }
       }
     },
