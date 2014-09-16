@@ -24,6 +24,9 @@ module.exports = function(grunt) {
       javascripts: {
         files: {
           '<%= DIRS.build %>jquery-html-history.min.js': [
+            '<%= DIRS.src %>jquery-html-history.js',
+          ],
+          '<%= DIRS.build %>jquery-html-history.kitchen-sink.js': [
             // Our Modernizr file
             '<%= DIRS.src %>modernizr.js',
             // Our files
@@ -33,6 +36,12 @@ module.exports = function(grunt) {
           '<%= DIRS.build %>jquery-html-history.sans-modern.js': [
             // Our files
             '<%= DIRS.src %>request-interval.js',
+            '<%= DIRS.src %>jquery-html-history.js',
+          ],
+          '<%= DIRS.build %>jquery-html-history.sans-request.js': [
+            // Our Modernizr file
+            '<%= DIRS.src %>modernizr.js',
+            // Our files
             '<%= DIRS.src %>jquery-html-history.js',
           ],
         }

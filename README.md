@@ -22,6 +22,12 @@ Browser Support:
 Use:
 ----
 
+All production files are located under the build/ directory
+min has just jquery-html-history.min.js (assumes you have request interval and modernizr tests already loaded)
+kitchen-sink has request-interval.js, modernizr.min.js, and jquery-html-history.min.js
+sans-modern has request-interval.js and jquery-html-history.min.js
+sans-requst has modernizr.min.js and jquery-html-history.min.js
+
 include jquery.
 include the request-interval.js
 include the modernizr.min.js
