@@ -1,0 +1,10 @@
+{
+  "name": "jquery-html-history",
+  "version": "1.0.0",
+  "main": "build/jquery-html-history.min.js",
+  "ignore": [
+    "node_modules",
+    "src",
+    "examples"
+  ]
+}
