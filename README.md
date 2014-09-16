@@ -29,9 +29,7 @@ sans-modern has request-interval.js and jquery-html-history.min.js
 sans-requst has modernizr.min.js and jquery-html-history.min.js
 
 include jquery.
-include the request-interval.js
-include the modernizr.min.js
-include the jquery-html-history.min.js
+include your build version above
 
 onload call:
 
