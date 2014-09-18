@@ -24,7 +24,7 @@
       ON_HASH_CHANGE = 'onhashchange',
       // HASH_CHANGE = 'hashchange', // I don't think this is used anymore...
       HASH_LINK_SELECTOR = 'a[href=#]',
-      INTERCEIPT_LINK_SELECTOR = 'a[href=^"/"]';
+      INTERCEPT_LINK_SELECTOR = 'a[href^="/"]';
 
   $.fn.htmlhistory = function(handler) {
     return handler ? this.on(HTML_HISTORY, handler) : this.trigger(HTML_HISTORY);
@@ -88,7 +88,10 @@
 
       // Intercept all relative links on the page, to avoid unneccesary page refreshes
       if (his.options.interceptLinks) {
-        $bod.on(INTERCEIPT_LINK_SELECTOR, 'click', function(e) {
+      
+        console.log("disable", his.options.interceptLinks, $(INTERCEPT_LINK_SELECTOR));
+        
+        $bod.on(INTERCEPT_LINK_SELECTOR, 'click', function(e) {
           his.changeTo($(this).attr('href'));
           e.preventDefault();
         });
